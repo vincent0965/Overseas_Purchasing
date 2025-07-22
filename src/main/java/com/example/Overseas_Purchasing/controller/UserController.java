@@ -13,6 +13,7 @@ public class UserController {
 
     private final UserService userService;
 
+    // new user
     @PostMapping("/register")
     public UserResponseDTO register(@RequestBody UserRequestDTO request) {
         return userService.register(request);

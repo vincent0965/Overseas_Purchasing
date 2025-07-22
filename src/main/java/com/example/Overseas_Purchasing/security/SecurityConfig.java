@@ -4,21 +4,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // 關閉 CSRF
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/users/register", "/api/users/login").permitAll() // 放行 /register
-                        .anyRequest().authenticated()             // 其他需驗證
-                )
-                .httpBasic(Customizer.withDefaults()); // 使用 httpBasic 做簡單驗證
-
+                .csrf(AbstractHttpConfigurer::disable) // 關閉 CSRF
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // 所有請求不需驗證
+                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 }

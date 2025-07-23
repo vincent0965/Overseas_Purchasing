@@ -6,6 +6,7 @@ import com.example.Overseas_Purchasing.model.User;
 import com.example.Overseas_Purchasing.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.example.Overseas_Purchasing.security.JwtTokenProvider;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
-
+    private final JwtTokenProvider jwtTokenProvider;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public UserResponseDTO register(UserRequestDTO request) {
@@ -28,7 +29,7 @@ public class UserService {
                 .build();
 
         User savedUser = userRepository.save(user);
-        return new UserResponseDTO(savedUser.getId(), savedUser.getUsername(), savedUser.getRole());
+        return new UserResponseDTO(savedUser.getId(), savedUser.getUsername(), savedUser.getRole(), null);
     }
 
     public UserResponseDTO login(UserRequestDTO request) {
@@ -38,7 +39,7 @@ public class UserService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
-
-        return new UserResponseDTO(user.getId(), user.getUsername(), user.getRole());
+        String token = jwtTokenProvider.generateToken(user);
+        return new UserResponseDTO(user.getId(), user.getUsername(), user.getRole(), token);
     }
 }

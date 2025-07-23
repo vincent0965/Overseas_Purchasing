@@ -21,6 +21,6 @@ public class UserController {
 
     @PostMapping("/login")
     public UserResponseDTO login(@RequestBody UserRequestDTO request) {
-        return userService.login(request);
+        return userService.login(request); //return token
     }
 }

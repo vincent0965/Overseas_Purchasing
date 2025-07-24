@@ -30,4 +30,12 @@ public class JwtTokenProvider {
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS256)
                 .compact();
     }
+
+    public String getUsername(String bearer) {
+        return bearer;
+    }
+
+    public Long getUserIdFromUsername(String username) {
+        return 0L;
+    }
 }

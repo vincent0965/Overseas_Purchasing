@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "username")
+@Table(name = "useraccount")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,11 +16,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
+    @Column(nullable = false) // 名字
+    private String firstname;
+
+    @Column(nullable = false) // 姓氏
+    private String lastname;
+
+    @Column(nullable = false, unique = true) // 帳號
+    private String account;
 
     @Column(nullable = false)
     private String password;
 
-    private String role; // USER, ADMIN
+    @Column
+    private String phone;
+
+    @Column
+    private String email;
+
+    @Column
+    private String city;
+
+    @Column
+    private String role; // 帳號權限
 }

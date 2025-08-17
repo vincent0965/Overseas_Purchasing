@@ -6,6 +6,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRequestDTO {
-    private String username;
+    private String firstname;
+    private String lastname;
+    private String account;
     private String password;
+    private String phone;
+    private String email;
+    private String city;
 }

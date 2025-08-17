@@ -18,28 +18,33 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public UserResponseDTO register(UserRequestDTO request) {
-        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+        if (userRepository.findByAccount(request.getAccount()).isPresent()) {
             throw new RuntimeException("Username already exists");
         }
 
         User user = User.builder()
-                .username(request.getUsername())
+                .firstname(request.getFirstname())
+                .lastname(request.getLastname())
+                .account(request.getAccount())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role("USER")
+                .phone(request.getPhone())
+                .email(request.getEmail())
+                .city(request.getCity())
                 .build();
 
         User savedUser = userRepository.save(user);
-        return new UserResponseDTO(savedUser.getId(), savedUser.getUsername(), savedUser.getRole(), null);
+        return new UserResponseDTO(savedUser.getId(), savedUser.getAccount(), savedUser.getRole(), null);
     }
 
     public UserResponseDTO login(UserRequestDTO request) {
-        User user = userRepository.findByUsername(request.getUsername())
+        User user = userRepository.findByAccount(request.getAccount())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
         String token = jwtTokenProvider.generateToken(user);
-        return new UserResponseDTO(user.getId(), user.getUsername(), user.getRole(), token);
+        return new UserResponseDTO(user.getId(), user.getAccount(), user.getRole(), token);
     }
 }

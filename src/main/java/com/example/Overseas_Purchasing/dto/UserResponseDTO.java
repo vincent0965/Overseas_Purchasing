@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 public class UserResponseDTO {
     private Long id;
-    private String username;
+    private String account;
     private String role;
     private String token; //認證token
 }

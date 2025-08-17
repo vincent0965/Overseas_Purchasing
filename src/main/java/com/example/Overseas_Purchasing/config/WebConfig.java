@@ -14,8 +14,11 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000") // 允許前端開發網址
-                        .allowedMethods("*")                     // 允許所有 HTTP 方法
+                        .allowedOrigins(
+                                "http://localhost:5173",
+                                "http://127.0.0.1:5173"
+                        ) // 允許前端開發網址
+                        .allowedMethods("GET","POST","PUT","DELETE","PATCH","OPTIONS") // 允許所有 HTTP 方法
                         .allowedHeaders("*")                     // 允許所有 Header
                         .allowCredentials(true);                 // 若有需要傳 cookie/token
             }

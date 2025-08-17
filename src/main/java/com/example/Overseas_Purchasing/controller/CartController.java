@@ -21,13 +21,13 @@ public class CartController {
 
     @PostMapping("/add")
     public Cart addCart(@RequestBody CartRequestDTO cartRequestDTO, Authentication authentication) {
-        String username = authentication.getName(); // 從 token 取得 username
-        return cartService.addCart(cartRequestDTO, username);
+        String account = authentication.getName(); // 從 token 取得 username
+        return cartService.addCart(cartRequestDTO, account);
     }
 
     @GetMapping("/my")
     public List<Cart> getMyCart(Authentication authentication) {
-        String username = authentication.getName();
-        return cartService.getCartByUsername(username);
+        String account = authentication.getName();
+        return cartService.getCartByAccount(account);
     }
 }

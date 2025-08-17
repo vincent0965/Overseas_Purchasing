@@ -9,9 +9,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // 根據 username 查詢使用者
-    Optional<User> findByUsername(String username);
+    // 根據 account 查詢使用者
+    Optional<User> findByAccount(String account);
 
-    // 檢查是否存在指定 username 的使用者
-    boolean existsByUsername(String username);
+    // 檢查是否存在指定 account 的使用者
+    boolean existsByAccount(String account);
 }

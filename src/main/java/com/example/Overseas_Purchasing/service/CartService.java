@@ -17,8 +17,8 @@ public class CartService {
     private final CartRepository cartRepository;
     private final UserRepository userRepository;
 
-    public Cart addCart(CartRequestDTO dto, String username) {
-        User user = userRepository.findByUsername(username)
+    public Cart addCart(CartRequestDTO dto, String account) {
+        User user = userRepository.findByAccount(account)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Cart cart = new Cart();
@@ -27,7 +27,7 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public List<Cart> getCartByUsername(String username) {
-        return cartRepository.findByUser_Username(username);
+    public List<Cart> getCartByAccount(String account) {
+        return cartRepository.findByUser_Account(account);
     }
 }

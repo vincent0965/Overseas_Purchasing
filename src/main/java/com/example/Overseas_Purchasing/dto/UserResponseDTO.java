@@ -9,5 +9,6 @@ public class UserResponseDTO {
     private Long id;
     private String account;
     private String role;
+    private String email;
     private String token; //認證token
 }

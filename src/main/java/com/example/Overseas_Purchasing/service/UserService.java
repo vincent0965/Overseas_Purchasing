@@ -27,14 +27,14 @@ public class UserService {
                 .lastname(request.getLastname())
                 .account(request.getAccount())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role("USER")
+                .role("USER") //之後要調整
                 .phone(request.getPhone())
                 .email(request.getEmail())
                 .city(request.getCity())
                 .build();
 
         User savedUser = userRepository.save(user);
-        return new UserResponseDTO(savedUser.getId(), savedUser.getAccount(), savedUser.getRole(), null);
+        return new UserResponseDTO(savedUser.getId(), savedUser.getAccount(), savedUser.getRole(), savedUser.getEmail(),null);
     }
 
     public UserResponseDTO login(UserRequestDTO request) {
@@ -45,6 +45,6 @@ public class UserService {
             throw new RuntimeException("Invalid credentials");
         }
         String token = jwtTokenProvider.generateToken(user);
-        return new UserResponseDTO(user.getId(), user.getAccount(), user.getRole(), token);
+        return new UserResponseDTO(user.getId(), user.getAccount(), user.getRole(), user.getEmail(),token);
     }
 }
